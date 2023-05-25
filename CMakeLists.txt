@@ -4,6 +4,17 @@ project(image_resizing_tool)
 
 include_directories(include)
 
+# Add third party header files
+# file(GLOB_RECURSE HEADER_DIRS lib/*.h)
+# foreach(HEADER_DIR ${HEADER_DIRS})
+#     get_filename_component(INCLUDE_DIR ${HEADER_DIR} DIRECTORY)
+#     include_directories(${INCLUDE_DIR})
+# endforeach()
+# Add stb_image header files
+include_directories(lib/stb_image)
+
+file(COPY image DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
+
 file(GLOB SOURCES src/*.cpp)
 
 # Add the executable target
