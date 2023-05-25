@@ -24,7 +24,7 @@ add_executable(im_rez ${SOURCES})
 if(CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang")
     # Compiler flags for GNU GCC or Clang
     target_compile_options(im_rez PRIVATE
-        -Wall                    # Enable all warnings
+        # -Wall                    # Enable all warnings
         -Wextra                  # Extra warning flags
         -Wpedantic               # Enforce strict standards
         -O2                      # Optimization level 2
