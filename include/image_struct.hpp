@@ -19,8 +19,30 @@ public:
         allocation_ = SELF_ALLOCATED;
     }
 
-    ~Image() {
-        free(data);
+    // Move constructor
+    Image(Image&& other)
+     : width(other.width), height(other.height), channels(other.channels) {
+        size = width * height * channels;
+        data = other.data;
+        allocation_ = other.allocation_;
+    }
+
+    ~Image() {}
+
+    Image & operator=(const Image &&other) noexcept {
+        // Check for self-assignment
+        if (this == &other) {
+            return *this;
+        }
+
+        width = other.width;
+        height = other.height;
+        channels = other.channels;
+        size = other.size;
+        data = other.data;
+        allocation_ = other.allocation_;
+
+        return *this;
     }
 
     int get_width() const {
@@ -90,7 +112,6 @@ private:
     size_t size;
     uint8_t *data;
     enum allocation_type allocation_;
-
 };
 
 void Image_load(Image *const img, const std::string &fname);

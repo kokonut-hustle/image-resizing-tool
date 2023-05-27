@@ -13,10 +13,10 @@ Image BIScaler::resize(const Image &img, double scaleX, double scaleY) {
                 double originalX = scaleX * col;
                 double originalY = scaleY * row;
 
-                std::pair<int, int> P1 = {floor(originalX), floor(originalY)};
-                std::pair<int, int> P2 = {ceil(originalX), floor(originalY)};
-                std::pair<int, int> P3 = {floor(originalX), ceil(originalY)};
-                std::pair<int, int> P4 = {ceil(originalX), ceil(originalY)};
+                std::pair<int, int> P1 = {std::max(0.0, floor(originalX)), std::max(0.0, floor(originalY))};
+                std::pair<int, int> P2 = {std::min(ceil(originalX), img.get_width()-1.0), std::max(0.0, floor(originalY))};
+                std::pair<int, int> P3 = {std::max(0.0, floor(originalX)), std::min(ceil(originalY), img.get_height()-1.0)};
+                std::pair<int, int> P4 = {std::min(ceil(originalX), img.get_width()-1.0), std::min(ceil(originalY), img.get_height()-1.0)};
 
                 double u = originalX - floor(originalX);
                 double v = originalY - floor(originalY);
