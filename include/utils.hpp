@@ -39,21 +39,16 @@ static inline void get_nearest_pxls(std::vector<std::pair<int, int>> &vp,
     vp.push_back(P4);
 }
 
-static inline uint8_t get_nearest_value(const Image &img, const std::vector<std::pair<int, int>> &vp,
-                                        double &u, double &v, int channel) {
-    int index;
-
+static inline int get_nearest_index(double &u, double &v) {
     if (u <= 0.5) {
         if (v <= 0.5)
-            index = 0;
+            return 0;
         else
-            index = 2;
+            return 2;
     } else {
         if (v <= 0.5)
-            index = 1;
+            return 1;
         else
-            index = 3;
+            return 3;
     }
-
-    return img.get_data()[img.get_channels() * (vp[index].second * img.get_width() + vp[index].first) + channel];
 }

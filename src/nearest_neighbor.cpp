@@ -12,21 +12,23 @@ Image NNScaler::resize(const Image &img, double scaleX, double scaleY) {
     std::vector<std::pair<int, int>> vp;
 
     for (int row = 0; row < rz_img.get_height(); ++row)
-        for (int channel = 0; channel < rz_img.get_channels(); ++channel)
-            for (int col = 0; col < rz_img.get_width(); ++col) {
-                double originalX = scaleX * col;
-                double originalY = scaleY * row;
+        for (int col = 0; col < rz_img.get_width(); ++col) {
+            double originalX = scaleX * col;
+            double originalY = scaleY * row;
 
-                get_nearest_pxls(vp, originalX, originalY, ori_width, ori_height);
+            get_nearest_pxls(vp, originalX, originalY, ori_width, ori_height);
 
-                double u = originalX - floor(originalX);
-                double v = originalY - floor(originalY);
+            double u = originalX - floor(originalX);
+            double v = originalY - floor(originalY);
 
+            int index = get_nearest_index(u, v);
+
+            for (int channel = 0; channel < rz_img.get_channels(); ++channel)
                 rz_img.get_data()[rz_img.get_channels() * (row * rz_img.get_width() + col) + channel] =
-                    get_nearest_value(img, vp, u, v, channel);
+                    img.get_data()[img.get_channels() * (vp[index].second * img.get_width() + vp[index].first) + channel];
 
-                vp.clear();
-            }
+            vp.clear();
+        }
     return rz_img;
 }
 
